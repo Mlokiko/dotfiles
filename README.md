@@ -1,12 +1,34 @@
-Ten folder (dotfiles) zawiera strukturę folderów/plików taką samą jak w FS systemu na którym chcemy podmienić dotfiles.
-żeby zacząć korzystać z zawartości, trzeba wejść do folderu dotfiles, wpisać stow . i gotowe, symlinki do znajdujących się tutaj
-plików zostaną stworzone
+# Dotfiles
 
-stow --adopt . - w wypadku np, próby wykonania komendy stow na folderze/pliku, który znajduje się
-normalnie w systemie, wywali błąd. --adopt weżmie plik z systemu, i zamieni go z plikiem który znajduje się w folderze stow
+Moje pliki konfiguracyjne
 
-Żeby pobieranie/wysyłanie zmian do repo na githubie działało, potrzeba mieć w systemie klucz SSH, i dodać pubiczną część do konta Githuba.
-Instrukcje:
-Jak rozpoznać czy mamy już dostępny klucz - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys
-Jak stworzyć nowy - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+## Wymagania
 
+### Git
+```
+pacman -S git
+```
+### Stow
+```
+pacman -S stow
+```
+## Instalacja/Aplikowanie
+```
+$ git clone git@github.com/Mlokiko/dotfiles.git
+$ cd dotfiles
+$ stow .
+```
+## Dodawanie/Modyfikacja zdalnego repo
+Trzeba zadbać o to aby nasz system był w stanie połączyć się z githubem - tzn. żeby miał klucz ssh<br><br>
+Jak rozpoznać czy mamy już dostępny klucz w systemie:
+```
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys
+```
+Jak stworzyć nowy klucz:
+```
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+```
+## Przydatne info
+```
+https://www.youtube.com/watch?v=y6XCebnB9gs
+```
