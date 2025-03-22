@@ -1,0 +1,25 @@
+font=FiraCode 11
+format=<b>%s</b>\n%b
+sort=-time
+#output=DP-2
+layer=overlay
+anchor=top-right
+background-color=#181818d9
+width=300
+height=110
+margin=5
+padding=0,5,10
+border-size=2
+border-color=#0f4c7599
+border-radius=15
+icons=0
+max-icon-size=64
+default-timeout=5000
+ignore-timeout=1
+
+[urgency=normal]
+border-color=#0f4c7599
+
+[urgency=high]
+border-color=#960000e6
+default-timeout=0

@@ -1,0 +1,10 @@
+ignore-empty-password
+image=~/.config/swaylock/lock-wallpaper.jpg
+indicator-idle-visible
+indicator-radius=120
+indicator-thickness=20
+indicator-caps-lock
+inside-color=00000000
+line-ver-color=000000
+line-color=123456
+ring-color=cccccc

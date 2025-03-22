@@ -1,0 +1,137 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    min-height: 0;
+
+}
+
+window#waybar {
+    background: rgba(24, 24, 24, 0.9);
+    border-bottom: 3px solid rgba(15, 76, 117, 0.9);
+    color: white;
+}
+
+tooltip {
+  background: rgba(24, 24, 24, 0.9);
+  border: 1px solid rgba(100, 114, 125, 0.9);
+}
+tooltip label {
+
+  color: white;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    color: white;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.focused {
+    background: #64727D;
+    border-bottom: 3px solid white;
+}
+
+#mode, #clock, #battery {
+    padding: 0 10px;
+}
+
+#mode {
+    background-color: rgba(0, 0, 150, 0.9);
+    border-bottom: 3px solid white;
+}
+
+#clock {
+    border-radius: 8px;
+    background-color: #0F4C75;
+    margin-bottom: 3px;
+}
+
+#battery {
+    border-radius: 8px;
+    padding-right: 13px;
+    background-color: #0F4C75;
+    color: white;
+    margin-bottom: 3px;
+}
+
+#battery.charging {
+    border-radius: 8px;
+    color: white;
+    background-color: #0F4C75;
+    margin-bottom: 3px;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#battery.warning:not(.charging) {
+    background-color: #0F4C75;
+    color: white;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    margin-bottom: 3px;
+}
+
+#temperature {
+	border-radius: 8px;
+	padding: 0 5px;
+	background-color: #0F4C75;
+	margin-bottom: 3px;
+}
+#backlight {
+	border-radius: 8px;
+	padding-right: 8px;
+	padding-left: 5px;
+	background-color: #0F4C75;
+	margin-bottom: 3px;
+}
+#memory {
+	border-radius: 8px;
+	padding-right: 10px;
+	padding-left: 5px;
+	background-color: #0F4C75;
+	margin-bottom: 3px;
+}
+#cpu {
+	border-radius: 8px;
+	padding-right: 8px;
+	padding-left: 5px;
+	background-color: #0F4C75;
+	margin-bottom: 3px;
+}
+#pulseaudio {
+	border-radius: 8px;
+	padding-right: 5px;
+	padding-left: 5px;
+	background-color: #0F4C75;
+	margin-bottom: 3px;
+}
+#idle_inhibitor {
+	border-radius: 8px;
+	padding: 0 5px;
+	background-color: #0F4C75;
+	margin-bottom: 3px;
+}
+#custom-ryzenadj-script {
+	border-radius: 8px;
+	padding: 5px;
+	background-color: #0F4c75;
+	margin-bottom: 3px;
+}
+#custom-cmus{
+	border-radius: 8px;
+	padding: 5px;
+	background-color: #0F4c75;
+	margin-bottom: 3px;
+
+}

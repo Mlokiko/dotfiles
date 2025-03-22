@@ -1,0 +1,121 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: Nerd Font Mono, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  min-height: 0;
+  font-weight: bold;
+}
+window#waybar {
+  background: rgba(24,24,24,1);
+  color: white;
+  margin: 0px;
+}
+tooltip {
+	background: rgba(24,24,24,0.9);
+	border: 1px solid rgba(100,114,125,0.9);
+}
+tooltip label {
+	color: white;
+}
+#workspaces button {
+  padding: 0 8px;
+  background: transparent;
+  color: white;
+  border-bottom: 3px solid transparent;
+}
+#workspaces button.focused {
+  /*background: #64727D;*/
+  border: 1px solid white;
+}
+/*#mode, #clock, #battery {
+  padding: 0 10px;
+}*/
+#mode {
+  background-color: rgba(0,0,150,0.9);
+  border-bottom: 3px solid white;
+}
+#clock, #battery, #battery.charging, #temperature, #backlight, #memory, #cpu, #pulseaudio, #idle_inhibitor, #custom-ryzenadj-script, #custom-cmus, #network, #bluetooth{
+	border-radius: 10px;
+	margin-bottom: 1px;
+	margin-top: 0px;
+	color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  border:1px solid grey;
+/*	background-color: rgba(15,76,117,0.6); */
+}	
+#clock {
+	margin-right: 3px;
+	padding-top: 2px;
+}
+#battery {
+	padding-right: 13px;
+}
+#battery.charging {
+}
+@keyframes blink {
+  to {
+      background-color: #ffffff;
+      color: black;
+  }
+}
+#battery.warning:not(.charging) {
+  background-color: #0F4C75;
+  color: white;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  margin-bottom: 3px;
+}
+#battery.critical:not(.charging) {
+	background-color: #FF0000;
+	color: white;
+	animation-name: blink;
+	animation-duration: 0.5s;
+	animation-timing-function: steps(12);
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	margin-bottom: 3px;
+}
+#network.disconnected {
+  color: orange;
+}
+/*
+#temperature {
+	padding: 0 5px;
+}
+#temperature.critical {
+	background-color: #eb4d4b;
+	padding: 0 5px;
+}
+#backlight {
+	padding-right: 8px;
+	padding-left: 5px;
+}
+#memory {
+	padding-right: 10px;
+	padding-left: 5px;
+}
+#cpu {
+	padding-right: 8px;
+	padding-left: 5px;
+}
+#pulseaudio {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+#custom-ryzenadj-script {
+	padding-right: 8px;
+	padding-left: 5px;
+	padding-top: 2px;
+}
+#custom-cmus{
+	padding: 5px;
+}
+#bluetooth {
+  padding-right: 5px;
+  padding-left: 5px;
+} */

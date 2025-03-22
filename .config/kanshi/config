@@ -1,0 +1,8 @@
+profile notebook {
+	output eDP-1 enable mode 1920x1080@59.999Hz position 0,0
+}
+
+profile iiyama {
+	output eDP-1 disable
+	output "Iiyama North America PL2470H 0x00000EC6" mode 1920x1080@120.000Hz position 0,0
+}

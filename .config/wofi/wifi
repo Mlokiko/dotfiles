@@ -1,0 +1,22 @@
+# Config for wofi-wifi-menu
+
+# Position values:
+# 1 2 3
+# 8 0 4
+# 7 6 5
+
+POSITION=3
+
+#y-offset
+YOFF=0
+
+#y-offset
+XOFF=0
+
+# Available Fields to display:
+# NAME, BSSID, MODE, CHAN, FREQ, RATE, SIGNAL, BARS,
+# SECURITY, WPA-FLAGS, RSN-FLAGS, DEVICE, ACTIVE,
+# IN-USE, DBUS-PATH
+
+#Fields to be displayed
+FIELDS=SSID,SECURITY,BARS

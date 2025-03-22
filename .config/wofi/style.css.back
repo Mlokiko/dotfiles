@@ -1,0 +1,9 @@
+window {
+	font-size: 18px;
+	color: white;
+	background-color: rgba(50, 50, 50, 0.95);
+}
+#entry:selected {
+	background-color: rgb(100, 114, 125);
+	color: white;
+}
