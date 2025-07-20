@@ -70,8 +70,8 @@
       "on-click": "foot -e -H 'sensors'"
     },
     "backlight": {
-      //"format": "{percent}% {icon}",
-      "format": "{icon}",
+      "format": "{percent}% {icon}",
+      //"format": "{icon}",
       "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "battery": {

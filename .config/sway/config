@@ -42,7 +42,7 @@ input type:keyboard {
 }
 
 # Wallpaper
-output * bg ~/Pictures/wallpapers/forest-in-mist.jpg fill
+output * bg ~/Pictures/wallpapers/tokyo-street-FHD.jpg fill
 
 ### Idle configuration
 exec swayidle -w \
@@ -55,6 +55,7 @@ exec swayidle -w \
 #
     # Start a terminal
     bindsym $mod+Return exec $term
+    bindsym $mod+t exec $term
 
     # Kill focused window
     bindsym $mod+q kill
@@ -72,24 +73,17 @@ exec swayidle -w \
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
-    # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'End Wayland session?' -B 'Yes' 'swaymsg exit'
-
 # Brightness controls
-bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
-bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+  bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5% | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
+  bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
 # Audio controls
-bindsym --locked XF86AudioPlay exec playerctl play-pause
-bindsym --locked XF86AudioNext exec playerctl next
-bindsym --locked XF86AudioPrev exec playerctl previous
-#bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
-#bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
-#bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && ( [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ] && echo 0 > $WOBSOCK ) || pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
-
-bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+  bindsym --locked XF86AudioPlay exec playerctl play-pause
+  bindsym --locked XF86AudioNext exec playerctl next
+  bindsym --locked XF86AudioPrev exec playerctl previous
+  bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
+  bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
+  bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && ( [ "$(pactl get-sink-mute @DEFAULT_SINK@)" = "Mute: yes" ] && echo 0 > $WOBSOCK ) || pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1{print substr($5,1,length($5)-1)}' > $WOBSOCK
+  bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Monitor scaling
  bindsym $mod+shift+i exec swaymsg output "*" scale 1
@@ -97,17 +91,33 @@ bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
  bindsym $mod+shift+o exec ~/.config/sway/scripts/scale.sh down
 
 # wifi/bluetooth wofi-menu
-bindsym $mod+shift+w exec wofi-wifi-menu
-bindsym $mod+shift+q exec /usr/bin/wofi-bluetooth
+  bindsym $mod+shift+w exec wofi-wifi-menu
+  bindsym $mod+shift+q exec /usr/bin/wofi-bluetooth
 
 # Screenshooting:
-bindsym $mod+Print exec grimshot --notify savecopy active
-bindsym Shift+Print exec grimshot --notify savecopy area
-bindsym Print exec grimshot --notify savecopy output
-bindsym Ctrl+Print exec grimshot --notify savecopy window
+  bindsym $mod+Print exec grimshot --notify savecopy active
+  bindsym Shift+Print exec grimshot --notify savecopy area
+  bindsym Print exec grimshot --notify savecopy output
+  bindsym Ctrl+Print exec grimshot --notify savecopy window
 
 # Toggle waybar visibility
-bindsym $mod+shift+b exec killall -SIGUSR1 waybar
+  bindsym $mod+shift+b exec killall -SIGUSR1 waybar
+
+# Special Laptop function keys (on Fn kyes)
+  bindsym XF86Display exec wdisplays
+  bindsym XF86Favorites exec ~/bin/scriptMenu
+
+# Gestures for touchpad
+  bindgesture swipe:right workspace prev
+  bindgesture swipe:left workspace next
+
+# Exit menu
+  bindsym $mod+Shift+e exec swaynag -f "foot" \
+  -m "Exit sway? This will end your current Wayland session." \
+  -B "Exit now" "swaymsg exit" \
+  -B "Suspend" "systemctl suspend && pkill swaynag" \
+  -B "Reboot" "systemctl reboot" \
+  -B "Power off" "systemctl poweroff" \
 
 #
 # Moving around:
