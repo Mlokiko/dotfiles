@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# to allow this script to work => sudo chmod u+s /usr/bin/ryzenadj 
+
+COUNT=$(<$HOME/.config/waybar/scripts/zmienna)
+
+case $COUNT in
+	1)
+		# Power - 3,2ghz all core, all core stress
+	echo 30W
+	ryzenadj --max-performance --slow-time=60 --tctl-temp=95 --stapm-limit=25000 --stapm-time=900 --fast-limit=30000 --slow-limit=30000 --vrmmax-current=60000 --min-gfxclk=400 --max-gfxclk=1100 --min-fclk-frequency=800 --max-fclk-frequency=1200
+	;;
+	2)
+		# Typewriter - 1,8ghz all core, all core stress, 2ghz one core, one core stress
+	echo 10W
+	ryzenadj --power-saving --slow-time=60 --tctl-temp=80 --stapm-limit=10000 --stapm-time=900 --fast-limit=10000 --slow-limit=10000 --vrmmax-current=25000 --min-gfxclk=400 --max-gfxclk=400 --min-fclk-frequency=800 --max-fclk-frequency=800
+	;;
+	*)
+		# Balanced - 2,4ghz, ocassional 3ghz for 2 cores, all core stress
+	echo 20W
+	ryzenadj --slow-time=60 --tctl-temp=95 --stapm-limit=20000 --stapm-time=900 --fast-limit=30000 --slow-limit=25000 --vrmmax-current=45000 --min-gfxclk=400 --max-gfxclk=1100 --min-fclk-frequency=800 --max-fclk-frequency=1200
+	COUNT=$((0))
+	;;
+esac
+
+COUNT=$((COUNT + 1))
+echo "$COUNT" > $HOME/.config/waybar/scripts/zmienna

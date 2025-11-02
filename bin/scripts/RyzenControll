@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# w razie kiedykolwiek problemów - sudo chmod u+s /usr/bin/ryzenadj
+
+# Define available options for profiles.
+options=$(cat <<EOF
+4/4/4w
+5/6/8w
+10/10/10w
+15/20/30w
+20/30/35w
+EOF
+)
+
+# Use wofi in dmenu mode to allow the user to select a profile.
+choice=$(echo -e "$options" | wofi --dmenu --prompt "Select profile:")
+
+# Check if a valid option was selected.
+if [ -z "$choice" ]; then
+    echo "No option selected."
+    exit 1
+fi
+
+case "$choice" in
+    "4/4/4w")
+        ryzenadj --power-saving --slow-time=60 --tctl-temp=80 --stapm-limit=4000 --stapm-time=30 --fast-limit=4000 --slow-limit=4000 --vrmmax-current=25000 
+        ;;
+    "5/6/8w")
+        ryzenadj --power-saving --slow-time=60 --tctl-temp=80 --stapm-limit=5000 --stapm-time=30 --fast-limit=8000 --slow-limit=6000 --vrmmax-current=25000 
+        ;;
+    "10/10/10w")
+        ryzenadj --power-saving --slow-time=60 --tctl-temp=80 --stapm-limit=10000 --stapm-time=30 --fast-limit=10000 --slow-limit=10000 --vrmmax-current=25000 
+        ;;
+    "15/20/30w")
+        ryzenadj --max-performance --slow-time=60 --tctl-temp=85 --stapm-limit=15000 --stapm-time=30 --fast-limit=30000 --slow-limit=20000 --vrmmax-current=45000 
+        ;;
+    "20/25/30w")
+        ryzenadj --max-performance --slow-time=60 --tctl-temp=90 --stapm-limit=20000 --stapm-time=30 --fast-limit=30000 --slow-limit=25000 --vrmmax-current=60000 
+        ;;
+    *)
+        echo "Invalid option."
+        exit 1
+        ;;
+esac

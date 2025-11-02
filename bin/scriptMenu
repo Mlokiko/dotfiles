@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Set the folder you want to list files from.
+FOLDER="$HOME/bin/scripts"
+
+# List the files in the folder.
+files=$(find "$FOLDER" -maxdepth 1 -type l -printf "%f\n")
+
+selection=$(echo "$files" | wofi --dmenu --prompt "Select script:")
+
+# Check if something was selected.
+if [[ -n "$selection" ]]; then
+  script="$FOLDER/$selection"
+  $script &
+fi

@@ -1,0 +1,53 @@
+#!/bin/bash
+
+CONFIG_FILE="/etc/tlp.d/99-battery-thresholds.conf"
+
+# Define available options for profiles.
+options=$(cat <<EOF
+0%  -> 100%
+50% -> 90%
+50% -> 85%
+50% -> 80%
+Stop charging
+EOF
+)
+
+# Use wofi in dmenu mode to allow the user to select a profile.
+choice=$(echo -e "$options" | wofi --dmenu --prompt "Select profile:")
+
+# Check if a valid option was selected.
+if [ -z "$choice" ]; then
+    echo "No option selected."
+    exit 1
+fi
+
+case "$choice" in
+  
+    "0%  -> 100%")
+        sudo bash -c "echo 'START_CHARGE_THRESH_BAT0=0' > $CONFIG_FILE"
+        sudo bash -c "echo 'STOP_CHARGE_THRESH_BAT0=100' >> $CONFIG_FILE"
+        ;;
+    "50% -> 90%")
+        sudo bash -c "echo 'START_CHARGE_THRESH_BAT0=50' > $CONFIG_FILE"
+        sudo bash -c "echo 'STOP_CHARGE_THRESH_BAT0=90' >> $CONFIG_FILE"
+        ;;
+    "50% -> 85%")
+        sudo bash -c "echo 'START_CHARGE_THRESH_BAT0=50' > $CONFIG_FILE"
+        sudo bash -c "echo 'STOP_CHARGE_THRESH_BAT0=85' >> $CONFIG_FILE"
+        ;;
+    "50% -> 80%")
+        sudo bash -c "echo 'START_CHARGE_THRESH_BAT0=50' > $CONFIG_FILE"
+        sudo bash -c "echo 'STOP_CHARGE_THRESH_BAT0=80' >> $CONFIG_FILE"
+        ;;
+    "Stop charging")
+        echo 0 | sudo tee /sys/class/power_supply/BAT0/charge_control_end_threshold > /dev/null
+        sleep 4 
+        ;;
+    *)
+        echo "Invalid option."
+        exit 1
+        ;;
+esac
+
+# Apply changes
+sudo tlp start
