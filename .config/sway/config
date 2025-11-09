@@ -2,7 +2,7 @@
   set $term foot
 
 # App launcher
-  set $menu wofi --show drun --gtk-dark
+  set $menu wofi --show drun
 
 # Font  
   font pango: Nerd Font Mono 10
@@ -117,6 +117,7 @@ exec swayidle -w \
   # Special Laptop function keys (on Fn kyes)
     bindsym XF86Display exec wdisplays
     bindsym XF86Favorites exec ~/bin/scriptMenu
+    bindsym $mod+Ctrl+Alt_L exec ~/bin/scriptMenu
 
   # Gestures for touchpad
     bindgesture swipe:right workspace prev
@@ -130,7 +131,9 @@ exec swayidle -w \
     -B "Reboot" "systemctl reboot" \
     -B "Power off" "systemctl poweroff" \
 
-### Moving around:
+#
+# Moving around:
+#
 
   # Move your focus around
     bindsym $mod+$left focus left
@@ -184,6 +187,7 @@ exec swayidle -w \
 #
 # Layout stuff:
 #
+
   # You can "split" the current object of your focus with
   # $mod+b or $mod+v, for horizontal and vertical splits
   # respectively.
@@ -210,14 +214,8 @@ exec swayidle -w \
 #
 # Scratchpad:
 #
-  # Sway has a "scratchpad", which is a bag of holding for windows.
-  # You can send windows there and get them back later.
 
-  # Move the currently focused window to the scratchpad
     bindsym $mod+Shift+minus move scratchpad
-
-  # Show the next scratchpad window or hide the focused scratchpad window.
-  # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
 
 #
@@ -251,7 +249,7 @@ exec swayidle -w \
     for_window [app_id="" title="Picture in picture"] floating enable, sticky enable
     for_window [app_id="" title="Picture-in-Picture"] floating enable, sticky enable
     for_window [instance="around"] floating enable, sticky enable
-  # for_window [app_id="xsensors"] floating enable
+    for_window [app_id="org.gnome.FileRoller"] floating enable, resize set 40ppt 60ppt, move position 55ppt 20ppt
     for_window [title="Save File"] floating enable
     for_window [title="Firefox .*— Sharing Indicator"] floating enable, sticky enable, move to scratchpad
     for_window [app_id="" title=".* is sharing your screen."] floating enable
@@ -266,19 +264,14 @@ exec swayidle -w \
     bindsym $down resize grow height 10px
     bindsym $up resize shrink height 10px
     bindsym $right resize grow width 10px
-
-  #Ditto, with arrow keys
     bindsym Left resize shrink width 10px
     bindsym Down resize grow height 10px
     bindsym Up resize shrink height 10px
     bindsym Right resize grow width 10px
-
-  # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
   }
   bindsym $mod+r mode "resize"
-
 
 #
 # border config
@@ -293,14 +286,15 @@ exec swayidle -w \
   client.focused_inactive  "#787878"      "#181818"      "#ffffff"   "#000000"     "#787878"
   client.unfocused 	       "#181818"      "#181818"      "#ffffff"
 
+#
 # Startup programs
+#
+
   exec --no-startup-id /usr/bin/kanshi
   #exec --no-startup-id /usr/bin/blueman-applet
   #exec /usr/bin/nm-applet
   exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
   exec /usr/bin/mako
-  #exec pcmanfm -d
-  # pcmanfm potrzebny do automount zewnętrznych dysków (pendrive). Można również użyć udiskie
   exec udiskie -a -t
   # -a automout, -t tray icon
 

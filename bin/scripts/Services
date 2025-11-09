@@ -1,0 +1,105 @@
+#!/bin/bash
+#
+# A Rofi script to manage systemd services.
+#
+# Shows a list of user-defined services and their status.
+# Selecting a service opens a new menu for actions
+# (start, stop, enable, disable, restart, status).
+#
+# Dependencies: rofi, systemd, pkexec (polkit), libnotify (notify-send)
+# Optional: x-terminal-emulator (for the 'Status' action)
+#
+
+# --- 💡 EDIT THIS LIST ---
+# Add the services you want to manage here.
+# (e.g., "sshd.service", "docker.service", "bluetooth.service")
+SERVICES=(
+    "bluetooth.service"
+    "tailscaled.service"
+    "udisks2.service"
+)
+# --- END OF CONFIGURATION ---
+
+
+# 1. Generate the menu list with status
+declare -A SERVICE_MAP   # Associative array to map menu lines back to service names
+declare -a MENU_LINES    # Array to hold the lines for Rofi
+
+for s in "${SERVICES[@]}"; do
+    # Get Active State
+    if systemctl is-active --quiet "$s"; then
+        STATUS_A="Active"
+        ICON_A="🟢"
+    else
+        STATUS_A="Inactive"
+        ICON_A="🔴"
+    fi
+
+    # Get Enabled State
+    if systemctl is-enabled --quiet "$s"; then
+        STATUS_E="Enabled"
+        ICON_E="🔵"
+    else
+        STATUS_E="Disabled"
+        ICON_E="⚪️"
+    fi
+
+    # Create the formatted line
+    LINE=$(printf "%-30s [ %s %-10s | %s %-10s ]" "$s" "$ICON_A" "$STATUS_A" "$ICON_E" "$STATUS_E")
+    
+    MENU_LINES+=("$LINE")
+    SERVICE_MAP["$LINE"]="$s" # Map the full line to the service name
+done
+
+# 2. Show Rofi - Stage 1: Select Service
+# We use printf to feed the array to rofi
+MAIN_SELECTION=$(printf "%s\n" "${MENU_LINES[@]}" | wofi -dmenu -p "Manage Service" -i -l 10)
+
+# Exit if user pressed escape or selection is empty
+[ -z "$MAIN_SELECTION" ] && exit 1
+
+# Get the actual service name from the selected line
+SERVICE=${SERVICE_MAP["$MAIN_SELECTION"]}
+
+# Handle if something went wrong (e.g., empty selection)
+[ -z "$SERVICE" ] && notify-send "Rofi Script Error" "Could not parse service name." && exit 1
+
+
+# 3. Show Rofi - Stage 2: Select Action
+# These are the actions we'll offer for the chosen service
+ACTIONS="Start\nStop\nEnable\nDisable\nRestart\nStatus"
+
+ACTION_SELECTION=$(echo -e "$ACTIONS" | wofi -dmenu -p "$SERVICE Action" -i)
+
+# Exit if user pressed escape
+[ -z "$ACTION_SELECTION" ] && exit 1
+
+# 4. Execute the selected action
+# We use pkexec to ask for administrator privileges for these actions.
+# We also send a notification on success.
+case "$ACTION_SELECTION" in
+    Start)
+        pkexec systemctl start "$SERVICE" && notify-send "$SERVICE" "Service started"
+        ;;
+    Stop)
+        pkexec systemctl stop "$SERVICE" && notify-send "$SERVICE" "Service stopped"
+        ;;
+    Enable)
+        pkexec systemctl enable "$SERVICE" && notify-send "$SERVICE" "Service enabled on boot"
+        ;;
+    Disable)
+        pkexec systemctl disable "$SERVICE" && notify-send "$SERVICE" "Service disabled on boot"
+        ;;
+    Restart)
+        pkexec systemctl restart "$SERVICE" && notify-send "$SERVICE" "Service restarted"
+        ;;
+    Status)
+        # This action opens a new terminal to show the full status output
+        x-terminal-emulator -e "systemctl status $SERVICE"
+        ;;
+    *)
+        notify-send "Invalid action selected"
+        ;;
+esac
+
+exit 0
