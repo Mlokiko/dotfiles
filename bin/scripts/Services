@@ -17,6 +17,7 @@ SERVICES=(
     "bluetooth.service"
     "tailscaled.service"
     "udisks2.service"
+    "libvirtd.service"
 )
 # --- END OF CONFIGURATION ---
 

@@ -16,11 +16,14 @@
 	  swaybar_command waybar
   }
 
+# Disable focus on move mouse pointer
+  focus_follows_mouse no
+
 # Hide mouse - 1000 means 1s
   seat seat0 hide_cursor 12000
 
 # Wallpaper
-output * bg ~/Pictures/wallpapers/windows_xp_bliss.jpg stretch
+output * bg ~/Pictures/wallpapers/arch-windows-10-wallpaper.png stretch
 
 # Idle configuration
 exec swayidle -w \
@@ -33,10 +36,12 @@ exec swayidle -w \
 #
 
     input type:touchpad {
-	    tap enabled
-	    dwt enabled
+	    tap enabled             # Tap to click
+	    dwt enabled             # Disable while typing
 	    natural_scroll enabled
-	    scroll_factor 0.4
+	    scroll_factor 0.4       # 0.4 feels like in windows
+      drag enabled            # Allows tap-tap-hold to drag
+      drag_lock disabled      # disabled - Drag ends after a short timeout (like in windows)
     }
   # Mouse acceleration disable 
     input type:pointer {
@@ -118,6 +123,10 @@ exec swayidle -w \
     bindsym XF86Display exec wdisplays
     bindsym XF86Favorites exec ~/bin/scriptMenu
     bindsym $mod+Ctrl+Alt_L exec ~/bin/scriptMenu
+
+  # Gestures for mouse
+    bindsym --whole-window $mod+button4 workspace prev
+    bindsym --whole-window $mod+button5 workspace next
 
   # Gestures for touchpad
     bindgesture swipe:right workspace prev
