@@ -20,15 +20,22 @@ export QT_QPA_PLATFORMTHEME=qt6ct
 export QT_QPA_PLATFORM=wayland
 export GDK_BACKEND=wayland
 export MOZ_ENABLE_WAYLAND=1
-
+export LIBVA_DRIVER_NAME=radeonsi
 export EDITOR=vim
 export XDG_SCREENSHOTS_DIR="$HOME/Pictures/Screenshot/"
 export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+# Fix na syf w HOME
+export HISTFILE="${XDG_STATE_HOME}"/bash/history
+
 
 # Export my folder with scripts
 export PATH="$HOME/bin:$PATH"
 
-
+export PATH="$HOME/.local/bin:$PATH"
 # fix for gtk theming
 #set $gnome-schema org.gnome.desktop.interface
 

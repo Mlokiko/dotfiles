@@ -1,5 +1,5 @@
 ignore-empty-password
-image=~/.config/swaylock/lock-wallpaper.jpg
+image=~/.config/swaylock/lock-wallpaper.png
 indicator-idle-visible
 indicator-radius=120
 indicator-thickness=20

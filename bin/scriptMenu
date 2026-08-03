@@ -1,15 +1,14 @@
 #!/bin/bash
 
-# Set the folder you want to list files from.
 FOLDER="$HOME/bin/scripts"
 
-# List the files in the folder.
-files=$(find "$FOLDER" -maxdepth 1 -type l -printf "%f\n")
+# Find executable files OR symlinks in the target directory
+files=$(find "$FOLDER" -maxdepth 1 \( -type f -o -type l \) -executable -printf "%f\n")
 
-selection=$(echo "$files" | wofi --dmenu --prompt "Select script:")
+# Prompt user via fuzzel
+selection=$(echo "$files" | fuzzel --dmenu --prompt "Select script: ")
 
-# Check if something was selected.
+# Execute selected script if non-empty
 if [[ -n "$selection" ]]; then
-  script="$FOLDER/$selection"
-  $script &
+  "$FOLDER/$selection" &
 fi
