@@ -329,6 +329,8 @@
 # Startup programs
 #
 
+  # keepass as a ssh agent
+  exec dbus-update-activation-environment --systemd SSH_AUTH_SOCK
   exec rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -t 500 -k 65515
   exec --no-startup-id /usr/bin/kanshi
   #exec --no-startup-id /usr/bin/blueman-applet
@@ -341,6 +343,8 @@
   exec foot --server
   exec pcmanfm --daemon-mode &
   exec swaymsg 'workspace number 2; exec firefox'
+  # keepas will act also as a keyring 
+  exec keepassxc
 
 # WOB - OSD for volume/brightness
   set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock

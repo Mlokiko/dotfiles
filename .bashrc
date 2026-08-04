@@ -39,3 +39,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # fix for gtk theming
 #set $gnome-schema org.gnome.desktop.interface
 
+# keepass as a ssh agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+alias ryzenadj='sudo /usr/sbin/ryzenadj'

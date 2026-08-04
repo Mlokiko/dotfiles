@@ -9,8 +9,9 @@ options=$(cat <<EOF
 2. Terminal - Ultra Low (4/4/4w)
 3. PowerSave - Quiet (5/6/8w)
 4. Balanced - Light Use (8/15/22w)
-5. Performance - Heavy (15/20/30w)
+5. Performance - Heavy (15/22/30w)
 6. Turbo - Maximum (20/25/30w)
+10. Check - ryzenadj/powerprofilesctl
 EOF
 )
 
@@ -26,27 +27,58 @@ fi
 case "$choice" in
     "1. Default"*)
         # ThinkPad T14 Gen 1 (Ryzen 4650U) Factory Default TDP limits
+		powerprofilesctl set balanced
         ryzenadj --max-performance --slow-time=60 --tctl-temp=90 --stapm-limit=15000 --fast-limit=25000 --slow-limit=22000 --vrmmax-current=40000
         ;;
     "2. Terminal"*)
+		powerprofilesctl set power-saver
         ryzenadj --power-saving --slow-time=60 --tctl-temp=70 --stapm-limit=4000 --fast-limit=4000 --slow-limit=4000 --vrmsoc-current=8000 --vrmsocmax-current=12000
-        echo "low-power" | sudo tee /sys/firmware/acpi/platform_profile >/dev/null
         ;;
     "3. PowerSave"*)
+		powerprofilesctl set power-saver
         ryzenadj --power-saving --slow-time=60 --tctl-temp=70 --stapm-limit=5000 --fast-limit=8000 --slow-limit=6000 --vrmsoc-current=8000 --vrmsocmax-current=12000
-        echo "low-power" | sudo tee /sys/firmware/acpi/platform_profile >/dev/null
         ;;
     "4. Balanced"*)
+		powerprofilesctl set balanced
         ryzenadj --power-saving --slow-time=15 --tctl-temp=80 --stapm-limit=8000 --fast-limit=22000 --slow-limit=15000 --vrmmax-current=25000
-        echo "low-power" | sudo tee /sys/firmware/acpi/platform_profile >/dev/null
         ;;
     "5. Performance"*)
-        ryzenadj --max-performance --slow-time=60 --tctl-temp=85 --stapm-limit=15000 --fast-limit=30000 --slow-limit=20000 --vrmmax-current=45000
-        echo "balanced" | sudo tee /sys/firmware/acpi/platform_profile >/dev/null
+		powerprofilesctl set performance
+        ryzenadj --max-performance --slow-time=60 --tctl-temp=85 --stapm-limit=15000 --fast-limit=30000 --slow-limit=22000 --vrmmax-current=45000
         ;;
     "6. Turbo"*)
+		powerprofilesctl set performance
         ryzenadj --max-performance --slow-time=60 --tctl-temp=90 --stapm-limit=20000 --fast-limit=30000 --slow-limit=25000 --vrmmax-current=60000
-        echo "performance" | sudo tee /sys/firmware/acpi/platform_profile >/dev/null
+        ;;
+	# Check if powerprofilesctl and ryzenadj works properly
+	"10. Check"*)
+        msg=""
+        if command -v powerprofilesctl >/dev/null 2>&1; then
+            current_pp=$(powerprofilesctl get 2>/dev/null)
+            if [ -n "$current_pp" ]; then
+                msg+="✔ pp: $current_pp"$'\n'
+            else
+                msg+="✘ powerprofilesctl: Installed, but service inactive"$'\n'
+            fi
+        else
+            msg+="✘ powerprofilesctl: Binary not found"$'\n'
+        fi
+
+        if command -v ryzenadj >/dev/null 2>&1; then
+            if ryzenadj -i >/dev/null 2>&1; then
+                msg+="✔ ryzenadj: OK"$'\n'
+            else
+                msg+="⚠ ryzenadj: Problem"$'\n'
+            fi
+        else
+            msg+="✘ ryzenadj: Binary not found"$'\n'
+        fi
+
+        echo -e "$msg"
+        if command -v notify-send >/dev/null 2>&1; then
+            notify-send -u normal -i preferences-system-power "Power Tools Diagnostic" "$msg"
+        fi
+        exit 0
         ;;
     *)
         echo "Invalid option."
