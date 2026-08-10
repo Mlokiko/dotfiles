@@ -71,8 +71,8 @@
     },
     "backlight": {
       "format": "{percent}% {icon}",
-      //"format": "{icon}",
-      "format-icons": ["", "", "", "", "", "", "", "", ""]
+      "format-icons": ["", "", "", "", "", "", "", "", ""],
+      "on-click": "nwg-displays"
     },
     "battery": {
       "states": {
@@ -86,7 +86,11 @@
       "format-plugged": "{capacity}% ",
       "format-alt": "{time} {icon}",
       "format-icons": ["", "", "", "", ""],
-      "on-click-right": "tlpui"
+      "on-click-right": "$HOME/bin/scripts/Battery",
+      "tooltip": true,
+      "tooltip-format": "{timeTo}\n({power:0.1f} W)",
+      "tooltip-format-charging": "{timeTo}\n{power:0.1f} W",
+      "tooltip-format-discharging": "{timeTo}\n{power:0.1f} W"
     },
     "pulseaudio": {
       "format": "{volume}% {icon}",
@@ -115,9 +119,9 @@
       "format-linked": "{ifname} (No IP) ",
       "format-disconnected": "Disconnected ⚠",
       "format-disabled": "Disabled ⚠",
+      "on-click": "foot -e -T='impala' 'impala'",
+      "on-click-right": "foot -e -T='nmtui' 'nmtui'"
       //"format-alt": "{ifname}: {ipaddr}/{cidr}",
-      "on-click": "impala",
-      "on-click-right": "foot -e 'nmtui'"
     },
     "bluetooth": {
       "interval": 10,
@@ -135,7 +139,7 @@
         "disabled": "disabled 󰂲",
         "off": "󰂲"
       },
-      "on-click": "bluetui",
+      "on-click": "foot -e -T='bluetui' 'bluetui'",
       "on-click-right": "blueman-manager"
     },
     "custom/ryzenadj-script": {

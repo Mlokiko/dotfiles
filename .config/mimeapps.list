@@ -1,0 +1,21 @@
+[Added Associations]
+text/plain=vim.desktop;org.xfce.mousepad.desktop;
+image/png=imv.desktop
+image/jpeg=imv.desktop
+application/pdf=org.pwmt.zathura.desktop;firefox.desktop;
+audio/flac=mpv.desktop;
+audio/mpeg=mpv.desktop;
+audio/vnd.wave=mpv.desktop;
+audio/x-aiff=mpv.desktop;
+audio/x-vorbis+ogg=mpv.desktop;
+
+[Default Applications]
+text/plain=nvim.desktop
+image/png=imv.desktop
+image/jpeg=imv.desktop
+application/pdf=org.pwmt.zathura.desktop
+audio/flac=mpv.desktop
+audio/mpeg=mpv.desktop
+audio/vnd.wave=mpv.desktop
+audio/x-aiff=mpv.desktop
+audio/x-vorbis+ogg=mpv.desktop

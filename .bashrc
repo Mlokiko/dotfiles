@@ -43,3 +43,9 @@ export PATH="$HOME/.local/bin:$PATH"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 alias ryzenadj='sudo /usr/sbin/ryzenadj'
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/mao/.lmstudio/bin"
+# End of LM Studio CLI section
+
